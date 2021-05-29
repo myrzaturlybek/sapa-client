@@ -2,7 +2,7 @@
   <div class="leading-normal tracking-normal text-white gradient">
     <the-header />
     <nuxt />
-    <the-footer />
+    <!-- <the-footer /> -->
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
 
 <style>
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  font-family: 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
@@ -32,7 +32,7 @@ html {
 }
 
 .gradient {
-  /* background: linear-gradient(90deg, #6200ee 0%, #03dac5 100%);  */
-  background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+  background: linear-gradient(90deg, #007bee 0%, #03d3da 100%); 
+  /* background: linear-gradient(90deg, #d53369 0%, #daae51 100%); */
 }
 </style>

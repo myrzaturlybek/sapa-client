@@ -17,8 +17,15 @@
     "test:dev": "jest --watch"
   },
   "dependencies": {
+    "@nuxtjs/auth-next": "5.0.0-1622018627.48534b6",
+    "@nuxtjs/axios": "^5.13.5",
+    "apexcharts": "^3.26.3",
+    "chart.js": "^2.9.4",
     "nuxt": "^2.14.3",
-    "nuxt-svg-loader": "^1.2.0"
+    "nuxt-svg-loader": "^1.2.0",
+    "trading-vue-js": "^1.0.2",
+    "vue-apexcharts": "^1.6.1",
+    "vue-chartjs": "^3.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

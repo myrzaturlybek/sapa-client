@@ -27,7 +27,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: '~/plugins/vue-apexchart.js', ssr: false }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -38,7 +38,44 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['nuxt-svg-loader'],
+  modules: ['nuxt-svg-loader', '@nuxtjs/axios', '@nuxtjs/auth-next'],
+
+  router: {
+    middleware: ['auth']
+  },
+
+  axios: {
+    baseURL: 'http://127.0.0.1:3001'
+  },
+
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/'
+    },
+    strategies: {
+      local: {
+        user: {
+          autoFetch: false
+        },
+        token: {
+          property: 'token.accessToken'
+        },
+        endpoints: {
+          login: {
+            url: 'auth/login',
+            method: 'post',
+            propertyName: 'accessToken'
+          },
+          user: false,
+          logout: false
+        }
+      }
+    }
+  },
+
   purgeCSS: {
     whitelist: ['hidden'],
     whitelistPatterns: [/md:w-[1-6]/]
@@ -50,6 +87,7 @@ export default {
     /*
      ** You can extend webpack config here
      */
+    vendor: ['vue-apexchart'],
     extend(config, ctx) {
       loaders: {
         file: {
