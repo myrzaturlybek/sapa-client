@@ -5,34 +5,58 @@
         class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center"
       >
         <div class="flex flex-wrap overflow-hidden w-full">
-          <div
-            class="w-full overflow-hidden flex-col items-center mb-20 text-black"
-          >
-            <div class="w-full">
-              <VueApexCharts
-                class="flex justify-center"
-                :width="'80%'"
-                :height="'500px'"
-                v-if="showCharts"
-                type="candlestick"
-                :options="options"
-                :series="series"
-              ></VueApexCharts>
+          <div class="w-full overflow-hidden flex mb-20 text-black">
+            <div class="w-1/2">
+              <div class="w-full">
+                <VueApexCharts
+                  class="flex justify-center"
+                  :width="'80%'"
+                  :height="'500px'"
+                  v-if="showCharts"
+                  type="candlestick"
+                  :options="options"
+                  :series="series"
+                ></VueApexCharts>
+              </div>
+              <div class="w-full">
+                <VueApexCharts
+                  class="flex justify-center"
+                  :width="'80%'"
+                  :height="'200px'"
+                  v-if="showCharts"
+                  type="bar"
+                  :options="chartOptionsBar"
+                  :series="seriesVolume"
+                ></VueApexCharts>
+              </div>
             </div>
-            <div class="w-full">
-              <VueApexCharts
-                class="flex justify-center"
-                :width="'80%'"
-                :height="'200px'"
-                v-if="showCharts"
-                type="bar"
-                :options="chartOptionsBar"
-                :series="seriesVolume"
-              ></VueApexCharts>
+            <div class="w-1/2">
+              <div class="w-full">
+                <VueApexCharts
+                  class="flex justify-center"
+                  :width="'80%'"
+                  :height="'500px'"
+                  v-if="showCharts"
+                  type="candlestick"
+                  :options="options2"
+                  :series="series2"
+                ></VueApexCharts>
+              </div>
+              <div class="w-full">
+                <VueApexCharts
+                  class="flex justify-center"
+                  :width="'80%'"
+                  :height="'200px'"
+                  v-if="showCharts"
+                  type="bar"
+                  :options="chartOptionsBar2"
+                  :series="seriesVolume2"
+                ></VueApexCharts>
+              </div>
             </div>
           </div>
 
-          <div class="w-full overflow-hidden">
+          <div class="w-1/2 mx-auto overflow-hidden">
             <div class="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -117,8 +141,67 @@ export default {
           selection: {
             enabled: true,
             xaxis: {
-              // min: new Date('20 Jan 2017').getTime(),
-              // max: new Date('10 Dec 2017').getTime(),
+              min: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30).getTime(),
+              max: new Date().getTime(),
+            },
+            fill: {
+              color: '#ccc',
+              opacity: 0.4,
+            },
+            stroke: {
+              color: '#0D47A1',
+            },
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        plotOptions: {
+          bar: {
+            columnWidth: '80%',
+            colors: {
+              ranges: [
+                {
+                  from: -1000,
+                  to: 0,
+                  color: '#F15B46',
+                },
+                {
+                  from: 1,
+                  to: 10000,
+                  color: '#FEB019',
+                },
+              ],
+            },
+          },
+        },
+        stroke: {
+          width: 0,
+        },
+        xaxis: {
+          type: 'datetime',
+          axisBorder: {
+            offsetX: 13,
+          },
+        },
+        yaxis: {
+          labels: {
+            show: false,
+          },
+        },
+      },
+      chartOptionsBar2: {
+        chart: {
+          type: 'bar',
+          brush: {
+            enabled: true,
+            target: 'candles2',
+          },
+          selection: {
+            enabled: true,
+            xaxis: {
+              min: new Date().getTime(),
+              max: new Date().getTime(Date.now() - 1000 * 60 * 60 * 24 * 30),
             },
             fill: {
               color: '#ccc',
@@ -170,32 +253,61 @@ export default {
         chart: {
           type: 'candlestick',
           id: 'candles',
-          toolbar: {
-            autoSelected: 'pan',
-            show: false,
-          },
+          // toolbar: {
+          //   autoSelected: 'pan',
+          //   show: false,
+          // },
           zoom: {
-            enabled: false,
+            enabled: true,
+            autoScaleYaxis: true,
           },
         },
-        plotOptions: {
-          candlestick: {
-            colors: {
-              upward: '#3C90EB',
-              downward: '#DF7D46',
-            },
-          },
-        },
+        // plotOptions: {
+        //   candlestick: {
+        //     colors: {
+        //       upward: '#3C90EB',
+        //       downward: '#DF7D46',
+        //     },
+        //   },
+        // },
         xaxis: {
           type: 'datetime',
         },
       },
-      series: [
+      options2: {
+        chart: {
+          type: 'candlestick',
+          id: 'candles2',
+          // toolbar: {
+          //   autoSelected: 'pan',
+          //   show: false,
+          // },
+          zoom: {
+            enabled: true,
+            autoScaleYaxis: true,
+          },
+        },
+        // plotOptions: {
+        //   candlestick: {
+        //     colors: {
+        //       upward: '#3C90EB',
+        //       downward: '#DF7D46',
+        //     },
+        //   },
+        // },
+        xaxis: {
+          type: 'datetime',
+        },
+      },
+      series: [{ data: [] }],
+      seriesVolume: [
         {
+          name: 'volume',
           data: [],
         },
       ],
-      seriesVolume: [
+      series2: [{ data: [] }],
+      seriesVolume2: [
         {
           name: 'volume',
           data: [],
@@ -212,11 +324,21 @@ export default {
       for (let d of dataset.data) {
         this.series[0].data.push({
           x: new Date(d.date),
-          y: [d.open, d.high, d.low, d.close],
+          y: [d.low, d.high, d.open, d.close],
         })
         // this.options.xaxis.categories.push(d.date)
         this.seriesVolume[0].data.push({ x: new Date(d.date), y: [d.volume] })
         // this.tweets.push(d.tweet)
+      }
+
+      const prediction = await this.$axios.get('dataset/prediction')
+      console.log(prediction)
+      for (let p of prediction.data) {
+        this.series2[0].data.push({
+          x: new Date(p.date),
+          y: [p.low, p.high, p.open, p.close],
+        })
+        this.seriesVolume2[0].data.push({ x: new Date(p.date), y: [p.volume] })
       }
       this.showCharts = true
     } catch (e) {
